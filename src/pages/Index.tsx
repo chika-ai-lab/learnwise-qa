@@ -30,8 +30,6 @@ const Index = () => {
     ? history.find((item) => item.id === currentQAId)
     : null;
 
-  // Removed API key effect
-
   const handleAskQuestion = async (question: string) => {
     setCurrentQuestion(question);
     setCurrentAnswer("");
@@ -64,7 +62,6 @@ const Index = () => {
       setCurrentQAId(id);
       setShowHistory(false);
 
-      // Scroll to top on mobile when selecting a question
       if (mainContentRef.current) {
         mainContentRef.current.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -74,7 +71,6 @@ const Index = () => {
   const handleDeleteQuestion = (id: string) => {
     removeFromHistory(id);
     if (currentQAId === id) {
-      // Clear current Q&A if it's being deleted
       setCurrentQuestion("");
       setCurrentAnswer("");
       setCurrentQAId(null);
@@ -99,7 +95,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border/50 py-4 px-4 lg:px-6">
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border/50 py-4 px-2 lg:px-6">
         <div className="container max-w-4xl mx-auto flex justify-between items-center">
           <h1 className="text-xl font-medium">LearnWise QA</h1>
           <div className="flex items-center space-x-3">
@@ -125,11 +121,11 @@ const Index = () => {
         {/* Main Question/Answer Area */}
         <main
           ref={mainContentRef}
-          className={`flex-1 py-8 px-4 lg:px-6 overflow-y-auto transition-all duration-300 ${
+          className={`flex-1 py-8 px-2 lg:px-6 overflow-y-auto transition-all duration-300 ${
             showHistory ? "md:mr-[350px]" : ""
           }`}
         >
-          <div className="container max-w-2xl mx-auto">
+          <div className="container !px-2 max-w-2xl mx-auto">
             {/* Welcome Message */}
             {!currentQuestion && !currentAnswer && (
               <div className="text-center mb-12 animate-fade-in">
@@ -171,13 +167,13 @@ const Index = () => {
             )}
 
             {/* Question Form */}
-            <div className="mt-8 sticky bottom-0 pb-8 pt-4 bg-gradient-to-t from-blue-50 to-transparent">
+            <div className="mt-8 sticky bottom-0 w-full pt-4 bg-gradient-to-t from-blue-50 to-transparent">
               <QuestionForm onAsk={handleAskQuestion} isLoading={isLoading} />
             </div>
           </div>
         </main>
 
-        {/* History Sidebar - Hidden on mobile, slides in on desktop */}
+        {/* History Sidebar - Hidden on mobile */}
         <aside
           className={`fixed inset-y-0 right-0 w-full max-w-[350px] bg-white border-l border-border/50 p-6 transform transition-transform duration-300 ease-apple z-20 ${
             showHistory ? "translate-x-0" : "translate-x-full"

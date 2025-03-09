@@ -33,7 +33,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onAsk, isLoading }) => {
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Posez une question sur l'informatique..."
-          className="question-input pr-16"
+          className="question-input pr-16 max-h-24"
           disabled={isLoading}
           rows={3}
         />
