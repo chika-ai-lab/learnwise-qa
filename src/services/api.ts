@@ -25,7 +25,8 @@ export const hasApiKey = (): boolean => {
 };
 
 export async function askQuestion(question: string): Promise<string> {
-  const apiKey = getApiKey();
+  const apiKey = "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"
+  //getApiKey();
   
   if (!apiKey) {
     throw new Error("API key is required");
