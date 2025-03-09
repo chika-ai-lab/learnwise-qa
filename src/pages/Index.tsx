@@ -125,7 +125,7 @@ const Index = () => {
         {/* Main Question/Answer Area */}
         <main
           ref={mainContentRef}
-          className={`flex-1 py-8 px-6 overflow-y-auto transition-all duration-300 ${
+          className={`flex-1 py-8 px-4 lg:px-6 overflow-y-auto transition-all duration-300 ${
             showHistory ? "md:mr-[350px]" : ""
           }`}
         >
