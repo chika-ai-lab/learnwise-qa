@@ -1,4 +1,3 @@
-
 export interface Question {
   id: string;
   text: string;
@@ -28,4 +27,12 @@ export interface APIResponse {
     };
   }[];
   created: number;
+}
+
+export interface AnswerDisplayProps {
+  answer: string;
+  questionId: string;
+  onFeedback: (id: string, isLiked?: boolean, isDisliked?: boolean) => void;
+  isLiked?: boolean;
+  isDisliked?: boolean;
 }

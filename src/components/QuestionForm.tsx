@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { SendHorizonal } from "lucide-react";
 
@@ -14,20 +13,29 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onAsk, isLoading }) => {
     e.preventDefault();
     if (question.trim() && !isLoading) {
       onAsk(question.trim());
-      // Don't clear the input immediately - it provides better UX to see what was asked
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (question.trim() && !isLoading) {
+        onAsk(question.trim());
+      }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div className="relative">
-        <input
-          type="text"
+        <textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Posez une question sur l'informatique..."
           className="question-input pr-16"
           disabled={isLoading}
+          rows={3}
         />
         <button
           type="submit"
