@@ -99,7 +99,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border/50 py-4 px-6">
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border/50 py-4 px-4 lg:px-6">
         <div className="container max-w-4xl mx-auto flex justify-between items-center">
           <h1 className="text-xl font-medium">LearnWise QA</h1>
           <div className="flex items-center space-x-3">
