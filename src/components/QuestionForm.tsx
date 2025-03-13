@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SendHorizonal } from "lucide-react";
+import { set } from "date-fns";
 
 interface QuestionFormProps {
   onAsk: (question: string) => void;
@@ -13,6 +14,8 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onAsk, isLoading }) => {
     e.preventDefault();
     if (question.trim() && !isLoading) {
       onAsk(question.trim());
+
+      setQuestion("");
     }
   };
 
@@ -21,6 +24,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ onAsk, isLoading }) => {
       e.preventDefault();
       if (question.trim() && !isLoading) {
         onAsk(question.trim());
+        setQuestion("");
       }
     }
   };
