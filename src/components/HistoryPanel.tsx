@@ -1,4 +1,3 @@
-
 import React from "react";
 import { QAPair } from "../types";
 import { Clock, Trash2 } from "lucide-react";
@@ -14,11 +13,15 @@ const HistoryPanel: React.FC<HistoryPanelProps> = ({
   history,
   onSelectQuestion,
   onDeleteQuestion,
-  onClearHistory
+  onClearHistory,
 }) => {
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return (
+      date.toLocaleDateString() +
+      " " +
+      date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    );
   };
 
   if (history.length === 0) {
@@ -45,11 +48,11 @@ const HistoryPanel: React.FC<HistoryPanelProps> = ({
           </button>
         )}
       </div>
-      
+
       <div className="space-y-3">
         {history.map((item) => (
           <div key={item.id} className="history-item group">
-            <div 
+            <div
               className="flex justify-between items-start"
               onClick={() => onSelectQuestion(item.id)}
             >

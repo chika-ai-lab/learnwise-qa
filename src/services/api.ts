@@ -7,10 +7,19 @@ if (!apiKey) {
   );
 }
 
-export async function askQuestion(question: string): Promise<string> {
+export async function askQuestion(
+  question: string,
+  messageHistory: Array<{ role: string; content: string }>
+): Promise<string> {
   if (!question.trim()) {
     return Promise.reject(new Error("La question ne peut pas être vide."));
   }
+
+  // Ajouter la nouvelle question à l'historique
+  const updatedHistory = [
+    ...messageHistory,
+    { role: "user", content: question },
+  ];
 
   try {
     const response = await fetch(API_URL, {
@@ -22,8 +31,14 @@ export async function askQuestion(question: string): Promise<string> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.0-pro-exp-02-05:free",
-        messages: [{ role: "user", content: question }],
+        model: "google/gemma-3-27b-it:free",
+        messages: [
+          {
+            role: "system",
+            content: "Vous êtes un expert en informatique et programmation.",
+          },
+          ...updatedHistory,
+        ],
       }),
     });
 
@@ -32,7 +47,13 @@ export async function askQuestion(question: string): Promise<string> {
     }
 
     const { choices } = await response.json();
-    return choices?.[0]?.message?.content ?? "Aucune réponse disponible.";
+    const answer =
+      choices?.[0]?.message?.content ?? "Aucune réponse disponible.";
+
+    // Ajouter la réponse à l'historique
+    updatedHistory.push({ role: "assistant", content: answer });
+
+    return answer;
   } catch (error) {
     console.error("Erreur API :", error);
     throw new Error(

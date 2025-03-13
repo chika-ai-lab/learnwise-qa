@@ -10,6 +10,11 @@ export interface Answer {
   timestamp: number;
 }
 
+export interface QARequest {
+  role: string;
+  content: string;
+}
+
 export interface QAPair {
   id: string;
   question: string;

@@ -37,8 +37,12 @@ const Index = () => {
     setIsLoading(true);
     setShowHistory(false);
 
+    const requestHistory = [
+      ...history.map((item) => ({ role: "user", content: item.question })),
+    ];
+
     try {
-      const answer = await askQuestion(question);
+      const answer = await askQuestion(question, requestHistory);
       setCurrentAnswer(answer);
       const id = addToHistory(question, answer);
       setCurrentQAId(id);
@@ -93,7 +97,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
+    <div className="h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border/50 py-4 px-2 lg:px-6">
         <div className="container max-w-4xl mx-auto flex justify-between items-center">
@@ -139,32 +143,30 @@ const Index = () => {
               </div>
             )}
 
-            {/* Question Display */}
-            {currentQuestion && (
-              <div className="mb-6 animate-slide-down">
-                <div className="mb-2">
-                  <div className="inline-block px-2 py-1 text-xs font-medium tracking-wide text-foreground/70 bg-secondary rounded-md">
-                    Question
+            {/* Conversation Display */}
+            <div className="space-y-4 flex flex-col-reverse">
+              {history.map((item) => (
+                <div key={item.id} className="flex flex-col  space-y-2">
+                  <div className="flex justify-end">
+                    <div className="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs">
+                      {item.question}
+                    </div>
+                  </div>
+                  <div className="flex justify-start">
+                    <AnswerDisplay
+                      answer={item.answer}
+                      questionId={currentQAId || ""}
+                      onFeedback={handleFeedback}
+                      isLiked={currentQAPair?.isLiked}
+                      isDisliked={currentQAPair?.isDisliked}
+                    />
                   </div>
                 </div>
-                <h3 className="text-xl font-medium">{currentQuestion}</h3>
-              </div>
-            )}
+              ))}
+            </div>
 
-            {/* Loading or Answer */}
-            {isLoading ? (
-              <LoadingIndicator />
-            ) : (
-              currentAnswer && (
-                <AnswerDisplay
-                  answer={currentAnswer}
-                  questionId={currentQAId || ""}
-                  onFeedback={handleFeedback}
-                  isLiked={currentQAPair?.isLiked}
-                  isDisliked={currentQAPair?.isDisliked}
-                />
-              )
-            )}
+            {/* Loading or Answer for Current Question */}
+            {isLoading && <LoadingIndicator />}
 
             {/* Question Form */}
             <div className="mt-8 sticky bottom-0 w-full pt-4 bg-gradient-to-t from-blue-50 to-transparent">
@@ -203,6 +205,13 @@ const Index = () => {
             showHistory ? "translate-x-0" : "translate-x-full"
           }`}
         >
+          <button
+            onClick={() => setShowHistory(false)}
+            className="p-2 rounded-full hover:bg-secondary transition-all"
+            aria-label="Fermer l'historique"
+          >
+            <X size={18} />
+          </button>
           <HistoryPanel
             history={history}
             onSelectQuestion={handleSelectQuestion}
