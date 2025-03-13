@@ -1,6 +1,20 @@
 import React from "react";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 
+/**
+ * Composant FeedbackButtons.
+ *
+ * Ce composant affiche deux boutons permettant de donner un retour d'information sur la réponse fournie.
+ * Les utilisateurs peuvent indiquer si la réponse a été utile ou non.
+ *
+ * @param questionId - Identifiant unique de la question associée au feedback.
+ * @param isLiked - Indique si la réponse a déjà été marquée comme "utile". Optionnel.
+ * @param isDisliked - Indique si la réponse a déjà été marquée comme "pas utile". Optionnel.
+ * @param onFeedback - Fonction de rappel appelée lors d'un clic sur l'un des boutons.
+ *                     Cette fonction reçoit l'identifiant de la question, ainsi qu'un booléen pour indiquer si la réponse est marquée comme utile et un autre pour indiquer si elle est marquée comme pas utile.
+ *
+ * @returns Un élément React contenant les boutons de feedback.
+ */
 const FeedbackButtons: React.FC<{
   questionId: string;
   isLiked?: boolean;

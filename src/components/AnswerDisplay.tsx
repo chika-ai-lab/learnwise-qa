@@ -10,6 +10,27 @@ interface QAPair {
 
 const LOCAL_STORAGE_KEY = "qaHistory";
 
+/**
+ * Composant fonctionnel AnswerDisplay.
+ *
+ * Ce composant est chargé d'afficher une réponse associée à une question spécifique et de gérer
+ * l'historique des conversations à travers le localStorage. Il effectue plusieurs opérations clés :
+ *
+ * - Charger l'historique sauvegardé depuis le localStorage lors du montage du composant.
+ * - Mettre à jour le localStorage chaque fois que l'historique change, afin de conserver un enregistrement
+ *   des interactions avec les réponses.
+ * - Ajouter un nouveau couple question-réponse à l'historique si cette association n'existe pas déjà pour
+ *   éviter les doublons.
+ *
+ * @param answer La réponse à afficher dans le composant.
+ * @param questionId L'identifiant unique de la question associée à la réponse.
+ * @param onFeedback Fonction de rappel déclenchée pour le retour d'information (feedback) de l'utilisateur
+ *                   (ex. like ou dislike).
+ * @param isLiked Indique si l'utilisateur a aimé (like) la réponse.
+ * @param isDisliked Indique si l'utilisateur n'a pas aimé (dislike) la réponse.
+ *
+ * @returns Un élément React qui affiche la réponse avec les boutons de feedback associés.
+ */
 const AnswerDisplay: React.FC<AnswerDisplayProps> = ({
   answer,
   questionId,
@@ -31,12 +52,12 @@ const AnswerDisplay: React.FC<AnswerDisplayProps> = ({
     }
   }, []);
 
-  // Update localStorage when history changes
+  // Met à jour le localStorage lorsque l'historique change
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
   }, [history]);
 
-  // Add new QA pair to conversation
+  // Ajouter une nouvelle paire question-réponse à la conversation
   useEffect(() => {
     if (questionId && answer) {
       setHistory((prev) => {

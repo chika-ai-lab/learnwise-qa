@@ -8,6 +8,46 @@ import { useQuestionHistory } from "@/hooks/useQuestionHistory";
 import { askQuestion } from "@/services/api";
 import { History, X } from "lucide-react";
 
+/**
+ * Composant de la page d'index pour l'application LearnWise QA.
+ *
+ * Ce composant affiche l'interface principale permettant d'interagir avec des questions et des réponses.
+ * Il présente un message de bienvenue, l'historique des conversations, et un formulaire de question.
+ * Il inclut également une barre latérale historique permettant d'afficher et de gérer
+ * les paires de questions/réponses précédentes.
+ *
+ * Fonctionnalités principales :
+ *
+ * - Gestion d'état :
+ *   - isLoading : Indique si une question est en cours de traitement.
+ *   - currentQuestion / currentAnswer : Stockent la question courante et sa réponse associée.
+ *   - currentQAId : Identifiant de la paire question/réponse active.
+ *   - showHistory : Permet d'afficher ou de masquer la barre latérale historique.
+ *
+ * - Hooks personnalisés :
+ *   - useToast : Fournit des méthodes pour afficher des notifications toast.
+ *   - useQuestionHistory : Gère l'historique des questions et réponses (ajout, suppression, effacement, mise à jour du feedback).
+ *
+ * - Gestionnaires d'événements :
+ *   - handleAskQuestion : Envoie de manière asynchrone la question à une API (via askQuestion),
+ *     met à jour l'état local avec la réponse reçue et ajoute la paire question/réponse à l'historique.
+ *     Traite également les erreurs en affichant une notification toast.
+ *   - handleSelectQuestion : Sélectionne une paire question/réponse depuis l'historique par son identifiant,
+ *     met à jour la zone de contenu principal, et défile en douceur vers le haut.
+ *   - handleDeleteQuestion : Supprime une paire question/réponse spécifique de l'historique et réinitialise
+ *     les états actuels si l'élément supprimé était actif.
+ *   - handleClearHistory : Efface l'intégralité de l'historique et réinitialise la question, la réponse et l'identifiant actif.
+ *   - handleFeedback : Met à jour l'état du feedback (aimé/non aimé) pour une paire question/réponse donnée.
+ *
+ * - Disposition :
+ *   - En-tête : Contient le titre de l'application et un bouton pour afficher/masquer la barre latérale historique.
+ *   - Zone de contenu principale : Affiche le message de bienvenue, l'historique des conversations,
+ *     les détails de la paire question/réponse active, et le formulaire de question fixé en bas.
+ *   - Barre latérale : Propose deux variantes (mobile et bureau) pour visualiser et interagir avec l'historique.
+ *
+ * Le composant utilise des classes CSS et un rendu conditionnel pour offrir une conception réactive
+ * adaptée aux différents formats d'écran et interactions utilisateur.
+ */
 const Index = () => {
   const { toast } = useToast();
   const {

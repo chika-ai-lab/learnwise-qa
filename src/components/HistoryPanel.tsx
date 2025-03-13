@@ -9,6 +9,18 @@ interface HistoryPanelProps {
   onClearHistory: () => void;
 }
 
+/**
+ * Composant HistoryPanel qui affiche l'historique des questions.
+ *
+ * Ce composant présente une liste de questions précédemment posées accompagnées de leur date de création.
+ * Il permet à l'utilisateur de sélectionner une question pour consulter ses détails, de supprimer individuellement
+ * une question ou d'effacer l'intégralité de l'historique.
+ *
+ * @param history - Tableau contenant l'historique des questions avec leur identifiant, question et timestamp.
+ * @param onSelectQuestion - Fonction de rappel appelée lors de la sélection d'une question. Reçoit l'identifiant de la question sélectionnée.
+ * @param onDeleteQuestion - Fonction de rappel appelée lors de la suppression d'une question. Reçoit l'identifiant de la question à supprimer.
+ * @param onClearHistory - Fonction de rappel appelée pour effacer l'intégralité de l'historique.
+ */
 const HistoryPanel: React.FC<HistoryPanelProps> = ({
   history,
   onSelectQuestion,

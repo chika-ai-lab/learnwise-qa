@@ -1,4 +1,4 @@
-const API_URL = "https://openrouter.ai/api/v1/chat/completions";
+const API_URL = import.meta.env.VITE_API_URL;
 const apiKey = import.meta.env.VITE_OPEN_ROUTER_API_KEY;
 
 if (!apiKey) {
@@ -7,6 +7,21 @@ if (!apiKey) {
   );
 }
 
+/**
+ * Interroge une API en envoyant une question ainsi que l'historique des échanges pour obtenir une réponse.
+ *
+ * Cette fonction vérifie d'abord que la question n'est pas vide, met à jour l'historique des messages
+ * en ajoutant la question de l'utilisateur, puis effectue un appel HTTP POST vers l'API. En cas de réponse
+ * positive, la réponse de l'API est extraite et ajoutée à l'historique avant d'être renvoyée. Si l'appel à
+ * l'API échoue, ou en cas de réponse non-OK, une erreur est renvoyée.
+ *
+ * @param question - La question à poser; la chaîne ne doit pas être vide.
+ * @param messageHistory - Historique des messages sous forme de tableau d'objets décrivant le rôle et le contenu.
+ *
+ * @returns Une promesse qui se résout avec la réponse de l'API sous forme de chaîne de caractères.
+ *
+ * @throws Une erreur si la question est vide ou en cas d'échec de la communication avec l'API.
+ */
 export async function askQuestion(
   question: string,
   messageHistory: Array<{ role: string; content: string }>
