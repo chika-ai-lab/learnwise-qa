@@ -46,7 +46,7 @@ export async function askQuestion(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemma-3-27b-it:free",
+        model: "deepseek/deepseek-r1-distill-llama-70b:free",
         messages: [
           {
             role: "system",
