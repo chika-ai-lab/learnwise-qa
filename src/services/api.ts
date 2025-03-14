@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const apiKey = import.meta.env.VITE_OPEN_ROUTER_API_KEY;
 
 if (!apiKey) {
